@@ -1,26 +1,88 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base dark theme */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: hsl(220, 20%, 8%);
+  --bg-surface: hsl(220, 20%, 11%);
+  --bg-surface-100: hsl(220, 20%, 14%);
+  --bg-surface-200: hsl(220, 18%, 18%);
+  --text-primary: hsl(210, 20%, 95%);
+  --text-secondary: hsl(215, 15%, 65%);
+  --text-muted: hsl(215, 10%, 45%);
+  --border: hsl(220, 15%, 20%);
+  --border-light: hsl(220, 12%, 26%);
+  --brand: hsl(220, 80%, 54%);
+  --brand-hover: hsl(220, 80%, 60%);
+  --danger: hsl(0, 72%, 51%);
+  --danger-hover: hsl(0, 72%, 44%);
+  --success: hsl(142, 70%, 45%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(220, 12%, 35%);
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+/* Glass morphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* LiveKit video overrides */
+.lk-video-conference {
+  background: transparent !important;
+}
+
+/* Video tile styles */
+video {
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, hsl(220,80%,70%) 0%, hsl(200,80%,70%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
