@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { getGoogleLoginUrl, getDevLoginUrl } from "@/lib/api";
 
 function LoginContent() {
@@ -205,10 +206,27 @@ function LoginContent() {
             </div>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-[hsl(220,15%,20%)]">
-            <p className="text-xs text-[hsl(215,10%,40%)] text-center leading-relaxed">
-              By signing in, you agree to our Terms of Service and Privacy Policy.
-              Your video and audio are processed directly through WebRTC.
+          <div className="mt-6 pt-6 border-t border-[hsl(220,15%,20%)] space-y-2">
+            <p className="text-xs text-[hsl(215,10%,50%)] text-center leading-relaxed">
+              By signing in, you agree to our{" "}
+              <Link href="/terms" className="text-[#8ab4f8] hover:text-[#aecbfa] underline">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="text-[#8ab4f8] hover:text-[#aecbfa] underline">
+                Privacy Policy
+              </Link>
+              .
+            </p>
+            <p className="text-[11px] text-[hsl(215,10%,40%)] text-center">
+              Direct WebRTC audio & video &bull; Support:{" "}
+              <a href="mailto:abdurahimanoffc@gmail.com" className="text-[#8ab4f8] hover:underline">
+                abdurahimanoffc@gmail.com
+              </a>{" "}
+              &bull;{" "}
+              <a href="tel:+919544499352" className="text-[#8ab4f8] hover:underline">
+                9544499352
+              </a>
             </p>
           </div>
         </div>

@@ -219,10 +219,16 @@ export function Header({ onOpenSettings }: HeaderProps) {
                     href="https://myaccount.google.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block w-full py-2.5 px-4 rounded-full border border-[#5f6368] hover:bg-[#3c4043] text-sm text-[#8ab4f8] font-medium transition-colors mb-4"
+                    className="inline-block w-full py-2.5 px-4 rounded-full border border-[#5f6368] hover:bg-[#3c4043] text-sm text-[#8ab4f8] font-medium transition-colors mb-3"
                   >
                     Manage your Google Account
                   </a>
+
+                  <div className="flex items-center justify-center gap-3 text-xs text-[#9aa0a6] mb-3">
+                    <a href="/privacy" className="hover:text-[#8ab4f8] transition-colors">Privacy Policy</a>
+                    <span className="text-[#5f6368]">&bull;</span>
+                    <a href="/terms" className="hover:text-[#8ab4f8] transition-colors">Terms of Service</a>
+                  </div>
 
                   <div className="border-t border-[#3c4043] pt-4">
                     <button

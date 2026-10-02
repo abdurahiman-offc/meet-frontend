@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { AuthGuard } from "@/components/layout/AuthGuard";
 import { Header } from "@/components/layout/Header";
 import { useAuth } from "@/hooks/useAuth";
@@ -140,7 +141,7 @@ function SettingsModal({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const [activeTab, setActiveTab] = useState<"audio" | "video">("audio");
+  const [activeTab, setActiveTab] = useState<"audio" | "video" | "general">("audio");
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
@@ -208,9 +209,20 @@ function SettingsModal({
           >
             Video
           </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab("general")}
+            className={`pb-2 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === "general"
+                ? "border-[#8ab4f8] text-[#8ab4f8]"
+                : "border-transparent text-[#9aa0a6] hover:text-white"
+            }`}
+          >
+            General & Legal
+          </button>
         </div>
 
-        {activeTab === "audio" ? (
+        {activeTab === "audio" && (
           <div className="space-y-5">
             <div>
               <label className="block text-xs uppercase tracking-wider text-[#9aa0a6] font-medium mb-2">Microphone</label>
@@ -227,7 +239,9 @@ function SettingsModal({
               </div>
             </div>
           </div>
-        ) : (
+        )}
+
+        {activeTab === "video" && (
           <div className="space-y-4">
             <div className="relative aspect-video bg-[#202124] border border-[#3c4043] rounded-2xl overflow-hidden flex items-center justify-center">
               {stream ? (
@@ -240,7 +254,92 @@ function SettingsModal({
           </div>
         )}
 
-        <div className="mt-8 flex justify-end">
+        {activeTab === "general" && (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#9aa0a6]">Legal & Compliance</span>
+              <div className="grid grid-cols-1 gap-2.5">
+                <a
+                  href="/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-[#202124] hover:bg-[#303134] border border-[#3c4043] transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#8ab4f8]/10 text-[#8ab4f8] flex items-center justify-center">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-white group-hover:text-[#8ab4f8] transition-colors flex items-center gap-1.5">
+                        Privacy Policy
+                        <svg className="w-3.5 h-3.5 text-[#9aa0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                      </span>
+                      <p className="text-xs text-[#9aa0a6]">Google Cloud OAuth 2.0 user data disclosure</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-[#8ab4f8]">&rarr;</span>
+                </a>
+
+                <a
+                  href="/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-[#202124] hover:bg-[#303134] border border-[#3c4043] transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#8ab4f8]/10 text-[#8ab4f8] flex items-center justify-center">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-white group-hover:text-[#8ab4f8] transition-colors flex items-center gap-1.5">
+                        Terms of Service
+                        <svg className="w-3.5 h-3.5 text-[#9aa0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                      </span>
+                      <p className="text-xs text-[#9aa0a6]">Terms of use & community guidelines</p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-[#8ab4f8]">&rarr;</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="p-3 bg-[#202124] border border-[#3c4043] rounded-xl text-xs space-y-1">
+              <span className="text-[#9aa0a6] block text-[10px] uppercase font-semibold">Contact & Support</span>
+              <p className="text-white">Email: <a href="mailto:abdurahimanoffc@gmail.com" className="text-[#8ab4f8] hover:underline font-mono">abdurahimanoffc@gmail.com</a></p>
+              <p className="text-white">Phone: <a href="tel:+919544499352" className="text-[#8ab4f8] hover:underline font-mono">+91 9544499352</a></p>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8 pt-4 border-t border-[#3c4043] flex items-center justify-between">
+          <div className="flex items-center gap-3 text-xs text-[#9aa0a6]">
+            <a
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#8ab4f8] hover:text-[#aecbfa] hover:underline"
+            >
+              Privacy Policy
+            </a>
+            <span className="text-[#5f6368]">&bull;</span>
+            <a
+              href="/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#8ab4f8] hover:text-[#aecbfa] hover:underline"
+            >
+              Terms of Service
+            </a>
+          </div>
+
           <button
             type="button"
             onClick={onClose}
@@ -328,8 +427,10 @@ export default function DashboardPage() {
       const meeting = await createMeeting("Meeting for later");
       setMeetings((prev) => [meeting, ...prev]);
       setLaterMeetingModal(meeting);
-    } catch {
-      showToast("Failed to create meeting for later");
+    } catch (err: any) {
+      console.error("Failed to create meeting for later:", err);
+      const detail = err?.response?.data?.detail;
+      showToast(typeof detail === "string" ? detail : "Failed to create meeting for later");
     }
   };
 
@@ -341,8 +442,10 @@ export default function DashboardPage() {
       const meeting = await createMeeting("Instant Meeting");
       setMeetings((prev) => [meeting, ...prev]);
       router.push(`/meeting/${meeting.meeting_id}`);
-    } catch {
-      showToast("Failed to start instant meeting");
+    } catch (err: any) {
+      console.error("Failed to start instant meeting:", err);
+      const detail = err?.response?.data?.detail;
+      showToast(typeof detail === "string" ? detail : "Failed to start instant meeting");
       setIsCreatingInstant(false);
     }
   };
@@ -364,7 +467,8 @@ export default function DashboardPage() {
           ? "Event created & opened in Google Calendar!"
           : "Opened Google Calendar with meeting link!"
       );
-    } catch {
+    } catch (err: any) {
+      console.warn("Schedule calendar API failed, falling back to local link generation:", err);
       // Fallback: create plain meeting and open calendar URL directly
       try {
         const fallbackMeeting = await createMeeting("Google Meet Video Meeting");
@@ -376,8 +480,10 @@ export default function DashboardPage() {
         const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${loc}`;
         window.open(calUrl, "_blank");
         showToast("Opened Google Calendar with meeting link!");
-      } catch {
-        showToast("Failed to schedule in Google Calendar");
+      } catch (innerErr: any) {
+        console.error("Fallback meeting creation failed:", innerErr);
+        const detail = innerErr?.response?.data?.detail;
+        showToast(typeof detail === "string" ? detail : "Failed to schedule in Google Calendar");
       }
     } finally {
       setIsSchedulingCalendar(false);
@@ -692,6 +798,35 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
+
+          {/* Minimal Dashboard Footer */}
+          <footer className="mt-16 pt-6 border-t border-[#3c4043]/50 flex flex-col sm:flex-row items-center justify-between text-xs text-[#9aa0a6] gap-4 select-none">
+            <div className="flex items-center gap-2">
+              <span className="text-[#e8eaed] font-medium">Google Meet</span>
+              <span className="text-[#5f6368]">&bull;</span>
+              <span>Abdurahiman</span>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-6">
+              <Link href="/privacy" className="hover:text-white transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="hover:text-white transition-colors">
+                Terms of Service
+              </Link>
+              <a
+                href="mailto:abdurahimanoffc@gmail.com"
+                className="hover:text-white transition-colors"
+              >
+                abdurahimanoffc@gmail.com
+              </a>
+              <a
+                href="tel:+919544499352"
+                className="hover:text-white transition-colors"
+              >
+                9544499352
+              </a>
+            </div>
+          </footer>
         </main>
 
         {/* Modal 1: "Here's your joining info" (For "Create a meeting for later") */}

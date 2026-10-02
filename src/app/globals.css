@@ -73,16 +73,56 @@ body {
   background: transparent !important;
 }
 
-/* Video tile styles */
-video {
-  object-fit: cover;
-  border-radius: inherit;
+/* Google Meet Theme Tokens */
+:root {
+  --meet-bg: #202124;
+  --meet-surface: #28292c;
+  --meet-surface-hover: #35363a;
+  --meet-button: #3c4043;
+  --meet-button-hover: #474a4d;
+  --meet-red: #ea4335;
+  --meet-red-hover: #d93025;
+  --meet-blue: #8ab4f8;
+  --meet-blue-hover: #aecbfa;
+  --meet-green: #34a853;
+  --meet-yellow: #fbbc04;
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, hsl(220,80%,70%) 0%, hsl(200,80%,70%) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@keyframes acousticWave {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+@keyframes soundWaveBar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+
+.animate-acoustic {
+  animation: acousticWave 1.8s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.animate-acoustic-delay {
+  animation: acousticWave 1.8s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation-delay: 0.6s;
+}
+
+.soundwave-bar-1 {
+  animation: soundWaveBar 0.8s ease-in-out infinite;
+}
+.soundwave-bar-2 {
+  animation: soundWaveBar 0.8s ease-in-out infinite 0.2s;
+}
+.soundwave-bar-3 {
+  animation: soundWaveBar 0.8s ease-in-out infinite 0.4s;
 }

@@ -1,16 +1,27 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Meeting, JoinTokenResponse, ParticipantInfo, User, ScheduleCalendarResponse } from "@/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+export function getApiBaseUrl(): string {
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host !== "localhost" && host !== "127.0.0.1") {
+      const envUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (!envUrl || envUrl.includes("localhost") || envUrl.includes("127.0.0.1")) {
+        return `${window.location.protocol}//${host}:8000`;
+      }
+    }
+  }
+  return process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+}
 
 function createApiClient(): AxiosInstance {
   const client = axios.create({
-    baseURL: `${API_URL}/api/v1`,
     headers: { "Content-Type": "application/json" },
   });
 
-  // Attach JWT from localStorage on every request
+  // Attach baseURL and JWT from localStorage on every request
   client.interceptors.request.use((config) => {
+    config.baseURL = `${getApiBaseUrl()}/api/v1`;
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("meet_token");
       if (token) {
@@ -41,11 +52,11 @@ const api = createApiClient();
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
 export function getGoogleLoginUrl(): string {
-  return `${API_URL}/api/v1/auth/google`;
+  return `${getApiBaseUrl()}/api/v1/auth/google`;
 }
 
 export function getDevLoginUrl(email: string = "host@example.com", name: string = "Host User"): string {
-  return `${API_URL}/api/v1/auth/dev-login?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+  return `${getApiBaseUrl()}/api/v1/auth/dev-login?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
 }
 
 export async function getMe(): Promise<User> {
